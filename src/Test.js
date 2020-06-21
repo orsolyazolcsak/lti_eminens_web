@@ -50,6 +50,7 @@ class Test extends React.Component{
                         <tr>
                             <th>Id</th>
                             <th>Nev</th>
+                            <th></th>
                         </tr>
                             {testItems}
                     </table>
