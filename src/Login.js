@@ -1,61 +1,81 @@
 import React from "react";
+import LoginService from "./LoginService";
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: "",
+            password: "",
             error: null,
-            isLoaded: false,
+            isLoaded: true,
+            authResponseMessage: null,
+            isUserLoggedIn: false,
             user: []
-        }
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.loginClicked = this.loginClicked.bind(this);
     }
 
-    componentDidMount() {
+    handleChange(event) {
+        this.setState(
+            {
+                [event.target.name]
+                    : event.target.value
+            }
+        )
+    }
+
+    loginClicked(event) {
+        event.preventDefault();
         fetch("http://localhost:8090/login", {
-            method: 'GET'
+            method: 'POST',
+            headers: { authorization: LoginService.createBasicAuthToken(this.state.username, this.state.password) }
         })
             .then(res => res.json())
             .then(
                 (result) => {
+                    console.log("result of auth request", result);
                     this.setState({
                         isLoaded: true,
-                        user: result
+                        authResponseMessage: result.message,
+                        isUserLoggedIn: true
                     });
+                    if (result.message === "You are authenticated.") {
+                        console.log("cool");
+                        LoginService.registerSuccessfulLogin(this.state.username);
+                    }
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
                 (error) => {
                     this.setState({
                         isLoaded: true,
+                        isUserLoggedIn: false,
                         error
                     });
                 }
             )
     }
 
+    componentDidMount() {
+    }
+
     render() {
-        const {error, isLoaded, items} = this.state;
+        const {error, isLoaded} = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
+            if (this.state.authResponseMessage != null) {
+                return (<h2>{this.state.username} {this.state.authResponseMessage}</h2>)
+            }
             return (
                 <div>
-                    <h2>{this.state.user.username}</h2>
-                    <form action="http://localhost:8090/login" method="post">
+                    <form onSubmit={this.loginClicked}>
                         Felhasználónév<br/>
-                        <input type="text" name="username"/>
+                        <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                         <br/>Jelszó<br/>
-                        <input type="password" name="password" required/>
-                        {/*<input type="text" name="fullName" required/>
-                        <br/>
-                        <select name="role">
-                            <option value="1">Tanár</option>
-                            <option value="2">Diák</option>
-                        </select>
-                        <br/><br/>*/}
+                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/>
                         <input type="submit" value="Hozzáad"/>
                     </form>
                 </div>

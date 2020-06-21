@@ -13,8 +13,10 @@ class Exam extends React.Component {
     }
 
     componentDidMount() {
+        console.log("loginservice.getToken", localStorage.getItem("asdf"));
         fetch('http://localhost:8090/test/new/' + this.props.testId, {
-            method: 'GET'
+            method: 'GET',
+authorization: localStorage.getItem("adsf")
         })
             .then(res => res.json())
             .then(
@@ -38,7 +40,7 @@ class Exam extends React.Component {
 
     render() {
         const examItems = this.state.problems.map(item => <ExamItem key={item.id} item={item}/>);
-        const {error, isLoaded, items} = this.state;
+        const {error, isLoaded} = this.state;
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {

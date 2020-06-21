@@ -13,7 +13,6 @@ import StartedExam from "./components/StartedExam";
 import CurrentQuestion from "./components/CurrentQuestion";
 
 function App() {
-    const students = [{name: 'Orsi'}, {name: 'Zsolti'}];
     return (
         <Router>
             <div>
