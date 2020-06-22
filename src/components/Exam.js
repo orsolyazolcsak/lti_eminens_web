@@ -1,5 +1,6 @@
 import React from "react";
 import ExamItem from "../ExamItem";
+import LoginService from "../LoginService";
 
 class Exam extends React.Component {
     constructor(props) {
@@ -13,10 +14,10 @@ class Exam extends React.Component {
     }
 
     componentDidMount() {
-        console.log("loginservice.getToken", localStorage.getItem("asdf"));
+        console.log("loginservice.getToken", LoginService.getToken());
         fetch('http://localhost:8090/test/new/' + this.props.testId, {
             method: 'GET',
-authorization: localStorage.getItem("adsf")
+            headers: {authorization: LoginService.getToken()}
         })
             .then(res => res.json())
             .then(
@@ -35,6 +36,7 @@ authorization: localStorage.getItem("adsf")
                     });
                 }
             )
+
 
     }
 

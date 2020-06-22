@@ -20,8 +20,7 @@ class Login extends React.Component {
     handleChange(event) {
         this.setState(
             {
-                [event.target.name]
-                    : event.target.value
+                [event.target.name]: event.target.value
             }
         )
     }
@@ -30,7 +29,7 @@ class Login extends React.Component {
         event.preventDefault();
         fetch("http://localhost:8090/login", {
             method: 'POST',
-            headers: { authorization: LoginService.createBasicAuthToken(this.state.username, this.state.password) }
+            headers: {authorization: LoginService.createBasicAuthToken(this.state.username, this.state.password)}
         })
             .then(res => res.json())
             .then(
@@ -75,7 +74,8 @@ class Login extends React.Component {
                         Felhasználónév<br/>
                         <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                         <br/>Jelszó<br/>
-                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} required/>
+                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}
+                               required/>
                         <input type="submit" value="Hozzáad"/>
                     </form>
                 </div>

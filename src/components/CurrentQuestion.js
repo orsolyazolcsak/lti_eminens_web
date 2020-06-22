@@ -1,4 +1,5 @@
 import React from "react";
+import LoginService from "../LoginService";
 
 class CurrentQuestion extends React.Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class CurrentQuestion extends React.Component {
             examId: this.props.examId,
             problemId: this.state.problem.id,
             answer: this.state.answer,
-            user: "TestStudent"
+            user: LoginService.getLoggedInUserName()
         };
         console.log(data);
         fetch('http://localhost:8090/exam/currentQuestion/' + this.props.examId, {

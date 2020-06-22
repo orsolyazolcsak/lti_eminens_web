@@ -1,4 +1,5 @@
 import React from "react";
+import LoginService from "../LoginService";
 
 class StartedExam extends React.Component {
     constructor(props) {
@@ -11,9 +12,13 @@ class StartedExam extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8090/exam/start/" + this.props.examId, {
-            method: 'GET'
-        })
+        console.log(LoginService.getToken());
+        let config = {
+            method: 'GET',
+            headers: {authorization: LoginService.getToken()}
+        };
+        console.log(config);
+        fetch("http://localhost:8090/exam/start/" + this.props.examId, config)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -26,7 +31,7 @@ class StartedExam extends React.Component {
                 (error) => {
                     this.setState({
                         isLoaded: true,
-                        error
+                        error: error
                     });
                 }
             )
@@ -37,7 +42,7 @@ class StartedExam extends React.Component {
         return (
             <div>
                 <p>{this.state.exam.startTime == null ? "Vizsga inditasa sikertelen" : "A vizsga elindult ekkor: " + this.state.exam.startTime}</p>
-                <a href={"/exam/currentQuestion/" + this.props.examId} >Current question</a>
+                <a href={"/exam/currentQuestion/" + this.props.examId}>Current question</a>
             </div>)
     }
 }

@@ -16,13 +16,13 @@ class LoginService {
 
     createBasicAuthToken(username, password) {
         token = 'Basic ' + window.btoa(username + ":" + password);
-        console.log("setting localstorage item asdf", token);
-        localStorage.setItem("asdf", token);
+        console.log("setting localstorage item user_token", token);
+        localStorage.setItem(username, token);
         return token;
     }
     getToken() {
-        console.log(token);
-        return localStorage.getItem("asdf");
+        //console.log(token);
+        return localStorage.getItem(this.getLoggedInUserName());
     }
 
     registerSuccessfulLogin(username) {
