@@ -99,8 +99,10 @@ class CurrentQuestion extends React.Component {
                     this.setState({
                         isLoaded: true,
                         exam: result,
-                        problem: result
+                        problem: result,
+                        examEnded: result.answers == null
                     });
+                    if (this.state.probl)
                     console.log("this.state", this.state);
                 },
                 (error) => {
@@ -120,11 +122,6 @@ class CurrentQuestion extends React.Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
-            if (this.state.problem.answers == null && !this.state.examEnded) {
-                    this.setState({
-                        examEnded: true
-                    })
-            }
             // TODO watcher users should be able to see all questions even if they answer incorrectly
             if (this.state.examEnded) {
                 return (<h2>A vizsga veget ert. Helyes valaszok szama: {this.state.numberOfCorrectAnswers} a 9-bol</h2>)
