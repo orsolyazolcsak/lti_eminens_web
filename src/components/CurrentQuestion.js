@@ -1,5 +1,6 @@
 import React from "react";
 import LoginService from "../LoginService";
+import Help from "./Help";
 
 class CurrentQuestion extends React.Component {
     constructor(props) {
@@ -19,12 +20,16 @@ class CurrentQuestion extends React.Component {
             },
             examEnded: false,
             numberOfCorrectAnswers: 0,
+            fiftyFiftyDao: {
+                problemId: null,
+                wrongAnswers: []
+            },
             isLoaded: false,
             error: null
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.fiftyFiftyCallback = this.fiftyFiftyCallback.bind(this);
     }
 
     handleChange(event) {
@@ -46,6 +51,7 @@ class CurrentQuestion extends React.Component {
         fetch('http://localhost:8090/exam/currentQuestion/' + this.props.examId, {
             method: 'POST',
             headers: {
+                authorization: LoginService.getToken(),
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
@@ -74,7 +80,7 @@ class CurrentQuestion extends React.Component {
                 (error) => {
                     this.setState({
                         isLoaded: true,
-                        error
+                        error: error
                     });
                 }
             );
@@ -90,7 +96,8 @@ class CurrentQuestion extends React.Component {
 
     async fetchCurrentQuestion() {
         fetch('http://localhost:8090/exam/currentQuestion/' + this.props.examId, {
-            method: 'GET'
+            method: 'GET',
+            headers: {authorization: LoginService.getToken()}
         })
             .then(res => res.json())
             .then(
@@ -102,7 +109,6 @@ class CurrentQuestion extends React.Component {
                         problem: result,
                         examEnded: result.answers == null
                     });
-                    if (this.state.probl)
                     console.log("this.state", this.state);
                 },
                 (error) => {
@@ -139,24 +145,28 @@ class CurrentQuestion extends React.Component {
                             <tr>
                                 <td>
                                     <input type="radio" id="answer0" name="answer" value={this.state.problem.answers[0]}
-                                           checked={this.state.answer === this.state.problem.answers[0]} readOnly/>
+                                           checked={this.state.answer === this.state.problem.answers[0]}
+                                           disabled={this.shouldBeDisabled(this.state.problem.answers[0])} readOnly/>
                                     <label htmlFor="answer0">{this.state.problem.answers[0]}</label>
                                 </td>
                                 <td>
                                     <input type="radio" id="answer1" name="answer" value={this.state.problem.answers[1]}
-                                           checked={this.state.answer === this.state.problem.answers[1]} readOnly/>
+                                           checked={this.state.answer === this.state.problem.answers[1]}
+                                           disabled={this.shouldBeDisabled(this.state.problem.answers[1])} readOnly/>
                                     <label htmlFor="answer1">{this.state.problem.answers[1]}</label>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <input type="radio" id="answer2" name="answer" value={this.state.problem.answers[2]}
-                                           checked={this.state.answer === this.state.problem.answers[2]} readOnly/>
+                                           checked={this.state.answer === this.state.problem.answers[2]}
+                                           disabled={this.shouldBeDisabled(this.state.problem.answers[2])} readOnly/>
                                     <label htmlFor="answer2">{this.state.problem.answers[2]}</label>
                                 </td>
                                 <td>
                                     <input type="radio" id="answer3" name="answer" value={this.state.problem.answers[3]}
-                                           checked={this.state.answer === this.state.problem.answers[3]} readOnly/>
+                                           checked={this.state.answer === this.state.problem.answers[3]}
+                                           disabled={this.shouldBeDisabled(this.state.problem.answers[3])} readOnly/>
                                     <label htmlFor="answer3">{this.state.problem.answers[3]}</label>
                                 </td>
                             </tr>
@@ -164,10 +174,24 @@ class CurrentQuestion extends React.Component {
                         </table>
                         <input type="Submit" value="Küldés" readOnly/>
                     </form>
+                    <Help examId={this.props.examId} fiftyFiftyCallback={this.fiftyFiftyCallback}
+                          problemDao={this.state.problem}/>
                 </div>
             );
         }
     }
+
+    shouldBeDisabled(answer) {
+        return this.state.problem.id === this.state.fiftyFiftyDao.problemId
+            && this.state.fiftyFiftyDao.wrongAnswers.indexOf(answer) > -1;
+    }
+    fiftyFiftyCallback(wrongAnswers) {
+        this.setState({fiftyFiftyDao: {
+            problemId: this.state.problem.id,
+                wrongAnswers: wrongAnswers
+            }});
+    }
+
 }
 
 

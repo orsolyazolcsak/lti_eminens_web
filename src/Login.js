@@ -76,7 +76,7 @@ class Login extends React.Component {
                         <br/>Jelszó<br/>
                         <input type="password" name="password" value={this.state.password} onChange={this.handleChange}
                                required/>
-                        <input type="submit" value="Hozzáad"/>
+                        <input type="submit" value="Bejelentkezés"/>
                     </form>
                 </div>
             );
