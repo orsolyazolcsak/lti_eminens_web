@@ -27,9 +27,6 @@ function App() {
                         <li>
                             <Link to="/test">Test</Link>
                         </li>
-                        <li>
-                            <Link to="/users">Users</Link>
-                        </li>
                     </ul>
                 </nav>
 
@@ -45,9 +42,6 @@ function App() {
                     <Route path="/exam">
                         <Topics/>
                     </Route>
-                    <Route path="/users">
-                        <Users/>
-                    </Route>
                     <Route path="/">
                         <Home/>
                     </Route>
@@ -59,11 +53,6 @@ function App() {
 
 function Home() {
     return <h2>Home</h2>;
-}
-
-
-function Users() {
-    return <h2>Users</h2>;
 }
 
 function Topics() {
