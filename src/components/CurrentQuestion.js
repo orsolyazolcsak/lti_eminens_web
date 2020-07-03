@@ -130,10 +130,10 @@ class CurrentQuestion extends React.Component {
         } else {
             // TODO watcher users should be able to see all questions even if they answer incorrectly
             if (this.state.examEnded) {
-                return (<h2>A vizsga veget ert. Helyes valaszok szama: {this.state.numberOfCorrectAnswers} a 9-bol</h2>)
+                return (<h2>A vizsga véget ért. Helyes válaszok száma: {this.state.numberOfCorrectAnswers} a 9-ből</h2>)
             }
             if (this.state.problem.id === this.state.lastSubmittedAnswer.problemId) {
-                return (<h2>Helyes valasz. Kerjuk varjon a kovetkezo kerdesre.</h2>)
+                return (<h2>Helyes válasz. Kérjük várjon a következő kérdésre.</h2>)
             }
             return (
                 <div className="exam-list">

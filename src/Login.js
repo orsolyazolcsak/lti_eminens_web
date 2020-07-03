@@ -15,6 +15,7 @@ class Login extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.loginClicked = this.loginClicked.bind(this);
+
     }
 
     handleChange(event) {
@@ -59,7 +60,9 @@ class Login extends React.Component {
     }
 
     render() {
+
         const {error, isLoaded} = this.state;
+
         if (error) {
             return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
@@ -69,13 +72,13 @@ class Login extends React.Component {
                 return (<h2>{this.state.username} {this.state.authResponseMessage}</h2>)
             }
             return (
-                <div>
+                <div style={{display: 'flex',  justifyContent:'center'}}>
                     <form onSubmit={this.loginClicked}>
                         Felhasználónév<br/>
                         <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                         <br/>Jelszó<br/>
                         <input type="password" name="password" value={this.state.password} onChange={this.handleChange}
-                               required/>
+                               required/><br/><br/>
                         <input type="submit" value="Bejelentkezés"/>
                     </form>
                 </div>
