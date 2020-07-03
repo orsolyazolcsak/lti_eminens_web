@@ -60,7 +60,7 @@ class Exam extends React.Component {
                             {examItems}
                         </tbody>
                     </table>
-                    <a href={'start/' + this.state.exam.id} >Start</a>
+                    <a href={'start/' + this.state.exam.id} >Vizsga indítása</a>
                 </div>
             );
         }

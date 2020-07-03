@@ -1,5 +1,6 @@
 import React from "react";
 import LoginService from "../LoginService";
+import Button from '@material-ui/core/Button';
 
 class Help extends React.Component {
     constructor(props) {
@@ -155,11 +156,11 @@ class Help extends React.Component {
 
         return (
             <div>
-                <button onClick={this.fiftyFifty} disabled={this.state.usedFiftyFifty}>
+                <Button variant="outlined" color="secondary" onClick={this.fiftyFifty} disabled={this.state.usedFiftyFifty}>
                     50/50
-                </button>
-                <button onClick={this.askTheAudience} disabled={this.state.usedAskTheAudience}>közönség segítség</button>
-                <button onClick={this.phoneAFriend} disabled={this.state.usedPhoneAFriend}>telefonos segítség</button>
+                </Button>
+                <Button variant="outlined" color="secondary" onClick={this.askTheAudience} disabled={this.state.usedAskTheAudience}>közönség segítség</Button>
+                <Button variant="outlined" color="secondary" onClick={this.phoneAFriend} disabled={this.state.usedPhoneAFriend}>telefonos segítség</Button>
                 <div hidden={this.state.askedTheAudienceForProblemId !== this.props.problemDao.id}>
                     <h2>Közönség segítsége:</h2>
                     <p>{JSON.stringify(this.state.askTheAudienceDao)}</p>
@@ -168,12 +169,12 @@ class Help extends React.Component {
                     <h2>Telefonos segítség:</h2>
                     <p>Válassz egy diákot a legördülő listából, akinek a válaszát látni szeretnéd</p>
                     <form onSubmit={this.watcherSelected}>
-                        <label htmlFor="watchers">Choose a watcher:</label>
+                        <label htmlFor="watchers">Válassz egy nézőt:</label>
                         <select name="watchers" id="watchers" value={this.state.selectValue} onChange={this.handleChange}>
                             {watchers}
                         </select>
                         <br/><br/>
-                        <input type="submit" value="Submit"/>
+                        <input type="submit" value="Küldés"/>
                     </form>
                     {this.state.phoneAFriendResponseSingleAnswer == null ? "" : this.state.phoneAFriendResponseSingleAnswer}
                 </div>

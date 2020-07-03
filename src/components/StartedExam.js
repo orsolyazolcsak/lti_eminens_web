@@ -42,7 +42,7 @@ class StartedExam extends React.Component {
         return (
             <div>
                 <p>{this.state.exam.startTime == null ? "Vizsga inditasa sikertelen" : "A vizsga elindult ekkor: " + this.state.exam.startTime}</p>
-                <a href={"/exam/currentQuestion/" + this.props.examId}>Current question</a>
+                <a href={"/exam/currentQuestion/" + this.props.examId}>Aktuális kérdés</a>
             </div>)
     }
 }

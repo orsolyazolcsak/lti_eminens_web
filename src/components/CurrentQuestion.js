@@ -1,6 +1,8 @@
 import React from "react";
 import LoginService from "../LoginService";
 import Help from "./Help";
+import Button from "@material-ui/core/Button";
+import Container from '@material-ui/core/Container';
 
 class CurrentQuestion extends React.Component {
     constructor(props) {
@@ -136,7 +138,7 @@ class CurrentQuestion extends React.Component {
                 return (<h2>Helyes válasz. Kérjük várjon a következő kérdésre.</h2>)
             }
             return (
-                <div className="exam-list">
+                <Container maxWidth="sm" className="exam-list">
                     <h2>{this.state.problem.question}</h2>
                     <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
                         <table>
@@ -173,12 +175,12 @@ class CurrentQuestion extends React.Component {
                             </tbody>
                         </table>
                         <br/>
-                        <input type="Submit" value="Küldés" readOnly/>
+                        <Button variant="outlined" color="primary" type="Submit" className="sendButton">Küldés</Button>
                     </form>
-                    <br/><br/>
+                    <br/><br/><br/>
                     <Help examId={this.props.examId} fiftyFiftyCallback={this.fiftyFiftyCallback}
                           problemDao={this.state.problem}/>
-                </div>
+                </Container>
             );
         }
     }
