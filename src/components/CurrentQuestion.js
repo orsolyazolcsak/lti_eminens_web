@@ -172,8 +172,10 @@ class CurrentQuestion extends React.Component {
                             </tr>
                             </tbody>
                         </table>
+                        <br/>
                         <input type="Submit" value="Küldés" readOnly/>
                     </form>
+                    <br/><br/>
                     <Help examId={this.props.examId} fiftyFiftyCallback={this.fiftyFiftyCallback}
                           problemDao={this.state.problem}/>
                 </div>

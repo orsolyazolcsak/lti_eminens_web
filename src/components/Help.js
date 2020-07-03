@@ -7,7 +7,7 @@ class Help extends React.Component {
         this.state = {
             usedFiftyFifty: false,
             usedAskTheAudience: false,
-            usedCallAFriend: false,
+            usedPhoneAFriend: false,
             askTheAudienceDao: null,
             phoneAFriendResponse: [],
             phoneAFriendResponseSingleAnswer: null,
@@ -129,7 +129,6 @@ class Help extends React.Component {
                     console.log('PhoneAFriend help result: ', result);
                     this.setState({
                         phoneAFriendResponse: result,
-                        usedPhoneAFriend: true,
                         phonedAFriendForProblemId: this.props.problemDao.id,
                         isLoaded: true,
                     });
@@ -156,18 +155,15 @@ class Help extends React.Component {
 
         return (
             <div>
-                <button onClick={this.fiftyFifty}>
+                <button onClick={this.fiftyFifty} disabled={this.state.usedFiftyFifty}>
                     50/50
                 </button>
-                <button onClick={this.askTheAudience}>közönség segítség</button>
-                <button onClick={this.phoneAFriend}>telefonos segítség</button>
-                if (this.state.askedTheAudienceForProblemId === this.props.problemDao.id) {
+                <button onClick={this.askTheAudience} disabled={this.state.usedAskTheAudience}>közönség segítség</button>
+                <button onClick={this.phoneAFriend} disabled={this.state.usedPhoneAFriend}>telefonos segítség</button>
                 <div hidden={this.state.askedTheAudienceForProblemId !== this.props.problemDao.id}>
                     <h2>Közönség segítsége:</h2>
                     <p>{JSON.stringify(this.state.askTheAudienceDao)}</p>
                 </div>
-            }
-                if (this.state.phonedAFriendForProblemId === this.props.problemDao.id) {
                 <div hidden={this.state.phonedAFriendForProblemId !== this.props.problemDao.id}>
                     <h2>Telefonos segítség:</h2>
                     <p>Válassz egy diákot a legördülő listából, akinek a válaszát látni szeretnéd</p>
@@ -181,7 +177,6 @@ class Help extends React.Component {
                     </form>
                     {this.state.phoneAFriendResponseSingleAnswer == null ? "" : this.state.phoneAFriendResponseSingleAnswer}
                 </div>
-            }
             </div>
         )
     }
