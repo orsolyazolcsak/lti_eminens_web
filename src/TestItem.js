@@ -1,13 +1,16 @@
 import React from "react";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 export default TestItem;
 
 function TestItem(props){
     return(
-        <tr>
-            <td>{props.item.id}</td>
-            <td>{props.item.name}</td>
-            <td><a href={'exam/new/' + props.item.id} >Új vizsga generálása</a></td>
-        </tr>
+        <TableRow>
+            <TableCell>{props.item.id}</TableCell>
+            <TableCell>{props.item.name}</TableCell>
+            <TableCell><a href={'exam/new/' + props.item.id} ><AddBoxIcon></AddBoxIcon></a></TableCell>
+        </TableRow>
     )
 }

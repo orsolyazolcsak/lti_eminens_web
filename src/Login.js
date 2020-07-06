@@ -41,7 +41,7 @@ class Login extends React.Component {
                         authResponseMessage: result.message,
                         isUserLoggedIn: true
                     });
-                    if (result.message === "You are authenticated.") {
+                    if (result.message === "sikeresen bejelentkeztél.") {
                         console.log("cool");
                         LoginService.registerSuccessfulLogin(this.state.username);
                     }

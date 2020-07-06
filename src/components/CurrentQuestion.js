@@ -3,14 +3,20 @@ import LoginService from "../LoginService";
 import Help from "./Help";
 import Button from "@material-ui/core/Button";
 import Container from '@material-ui/core/Container';
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import Table from "@material-ui/core/Table";
 
 class CurrentQuestion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            problem: {id: null,
+            problem: {
+                id: null,
                 question: null,
-                answers: []},
+                answers: []
+            },
             answer: null,
             questionFetcher: null,
             lastSubmittedAnswer: {
@@ -89,7 +95,7 @@ class CurrentQuestion extends React.Component {
     }
 
     componentDidMount() {
-           this.setState( {questionFetcher: setInterval(() => this.fetchCurrentQuestion(), 5000)});
+        this.setState({questionFetcher: setInterval(() => this.fetchCurrentQuestion(), 5000)});
     }
 
     componentWillUnmount() {
@@ -141,39 +147,46 @@ class CurrentQuestion extends React.Component {
                 <Container maxWidth="sm" className="exam-list">
                     <h2>{this.state.problem.question}</h2>
                     <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                        <table>
-
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="answer0" name="answer" value={this.state.problem.answers[0]}
-                                           checked={this.state.answer === this.state.problem.answers[0]}
-                                           disabled={this.shouldBeDisabled(this.state.problem.answers[0])} readOnly/>
-                                    <label htmlFor="answer0">{this.state.problem.answers[0]}</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="answer1" name="answer" value={this.state.problem.answers[1]}
-                                           checked={this.state.answer === this.state.problem.answers[1]}
-                                           disabled={this.shouldBeDisabled(this.state.problem.answers[1])} readOnly/>
-                                    <label htmlFor="answer1">{this.state.problem.answers[1]}</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="answer2" name="answer" value={this.state.problem.answers[2]}
-                                           checked={this.state.answer === this.state.problem.answers[2]}
-                                           disabled={this.shouldBeDisabled(this.state.problem.answers[2])} readOnly/>
-                                    <label htmlFor="answer2">{this.state.problem.answers[2]}</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="answer3" name="answer" value={this.state.problem.answers[3]}
-                                           checked={this.state.answer === this.state.problem.answers[3]}
-                                           disabled={this.shouldBeDisabled(this.state.problem.answers[3])} readOnly/>
-                                    <label htmlFor="answer3">{this.state.problem.answers[3]}</label>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>
+                                        <input type="radio" id="answer0" name="answer"
+                                               value={this.state.problem.answers[0]}
+                                               checked={this.state.answer === this.state.problem.answers[0]}
+                                               disabled={this.shouldBeDisabled(this.state.problem.answers[0])}
+                                               readOnly/>
+                                        <label htmlFor="answer0">{this.state.problem.answers[0]}</label>
+                                    </TableCell>
+                                    <TableCell>
+                                        <input type="radio" id="answer1" name="answer"
+                                               value={this.state.problem.answers[1]}
+                                               checked={this.state.answer === this.state.problem.answers[1]}
+                                               disabled={this.shouldBeDisabled(this.state.problem.answers[1])}
+                                               readOnly/>
+                                        <label htmlFor="answer1">{this.state.problem.answers[1]}</label>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <input type="radio" id="answer2" name="answer"
+                                               value={this.state.problem.answers[2]}
+                                               checked={this.state.answer === this.state.problem.answers[2]}
+                                               disabled={this.shouldBeDisabled(this.state.problem.answers[2])}
+                                               readOnly/>
+                                        <label htmlFor="answer2">{this.state.problem.answers[2]}</label>
+                                    </TableCell>
+                                    <TableCell>
+                                        <input type="radio" id="answer3" name="answer"
+                                               value={this.state.problem.answers[3]}
+                                               checked={this.state.answer === this.state.problem.answers[3]}
+                                               disabled={this.shouldBeDisabled(this.state.problem.answers[3])}
+                                               readOnly/>
+                                        <label htmlFor="answer3">{this.state.problem.answers[3]}</label>
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                        </Table>
                         <br/>
                         <Button variant="outlined" color="primary" type="Submit" className="sendButton">Küldés</Button>
                     </form>
@@ -189,11 +202,14 @@ class CurrentQuestion extends React.Component {
         return this.state.problem.id === this.state.fiftyFiftyDao.problemId
             && this.state.fiftyFiftyDao.wrongAnswers.indexOf(answer) > -1;
     }
+
     fiftyFiftyCallback(wrongAnswers) {
-        this.setState({fiftyFiftyDao: {
-            problemId: this.state.problem.id,
+        this.setState({
+            fiftyFiftyDao: {
+                problemId: this.state.problem.id,
                 wrongAnswers: wrongAnswers
-            }});
+            }
+        });
     }
 
 }

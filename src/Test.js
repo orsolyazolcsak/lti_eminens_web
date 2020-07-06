@@ -2,6 +2,13 @@ import React from "react";
 import TestItem from "./TestItem";
 import './Test.css';
 import LoginService from "./LoginService";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 class Test extends React.Component {
 
@@ -58,18 +65,21 @@ class Test extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <div className="test-list">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nev</th>
-                            </tr>
+                <TableContainer component={Paper}>
+                    <Table aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Id</TableCell>
+                                <TableCell>Név</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {testItems}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-                </div>
             );
         }
     }

@@ -1,11 +1,15 @@
 import React from "react";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 
-function ExamItem(props){
-    return(
-        <tr>
-            <td>{props.item.id}</td>
-            <td>{props.item.question}</td>
-        </tr>
+function ExamItem(props) {
+    return (
+
+        <TableRow>
+            <TableCell>{props.item.id}</TableCell>
+            <TableCell>{props.item.question}</TableCell>
+        </TableRow>
+
     )
 }
 

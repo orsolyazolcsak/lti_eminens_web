@@ -1,64 +1,115 @@
 import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Link, Route, Switch, useParams, useRouteMatch} from "react-router-dom";
+import {BrowserRouter as Router, NavLink, Route, Switch, useParams, useRouteMatch} from "react-router-dom";
 import Login from "./Login";
 import Test from "./Test";
 import Exam from "./components/Exam";
 import StartedExam from "./components/StartedExam";
 import CurrentQuestion from "./components/CurrentQuestion";
 import {makeStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from '@material-ui/core/Menu';
 
-const useStyles = makeStyles((theme) => ({
+const useStylesAppBar = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    title: {
+        flexGrow: 1,
     },
 }));
 
+const useStyles = makeStyles(theme => ({
+    offset: theme.mixins.toolbar,
+}))
+
 function App() {
+    const classesAppBar = useStylesAppBar();
+
     const classes = useStyles();
 
-    return (
-        <Router>
-            <div className={classes.root}>
-                <List component="nav">
-                    <ListItem button component="a" href="/">
-                        <ListItemText primary="Főoldal"/>
-                    </ListItem>
-                    <ListItem button component="a" href="/login">
-                        <ListItemText primary="Bejelentkezés"/>
-                    </ListItem>
-                    <ListItem button component="a" href="/test">
-                        <ListItemText primary="Tesztek"/>
-                    </ListItem>
-                </List>
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-                {/* A <Switch> looks through its children <Route>s and
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    return (
+        <div>
+            <Router>
+                <div className={classesAppBar.root}>
+                    <AppBar position="fixed">
+                        <Toolbar>
+                            <IconButton edge="start" className={classesAppBar.menuButton} color="inherit"
+                                        aria-label="menu" onClick={handleClick}>
+                                <MenuIcon/>
+                            </IconButton>
+                            {/* eslint-disable-next-line react/jsx-no-undef */}
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem component={NavLink} to="/" onClick={handleClose}>Főoldal</MenuItem>
+                                <MenuItem component={NavLink} to="/test" onClick={handleClose}>Tesztek</MenuItem>
+                                <MenuItem component={NavLink} to="/logout"
+                                          onClick={handleClose}>Kijelentkezés</MenuItem>
+                            </Menu>
+                            <Typography variant="h6" className={classesAppBar.title}>
+                                Legyél Te is Eminens
+                            </Typography>
+                            <Button color="inherit" href="/login">Bejelentkezés</Button>
+                        </Toolbar>
+                    </AppBar>
+                    <div className={classes.offset} />
+
+                    {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-                <Switch>
-                    <Route path="/login">
-                        <Login/>
-                    </Route>
-                    <Route path="/test">
-                        <Test/>
-                    </Route>
-                    <Route path="/exam">
-                        <Topics/>
-                    </Route>
-                    <Route path="/">
-                        <Home/>
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+                    <Switch>
+                        <Route path="/login">
+                            <Login/>
+                        </Route>
+                        <Route path="/logout">
+                            <Logout/>
+                        </Route>
+                        <Route path="/test">
+                            <Test/>
+                        </Route>
+                        <Route path="/exam">
+                            <Topics/>
+                        </Route>
+                        <Route path="/">
+                            <Home/>
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+        </div>
     );
 }
 
 function Home() {
-    return <h2>Home</h2>;
+    return <h2>Üdvözöllek a főoldalon! Sok sikert! :)</h2>;
+}
+
+function Logout() {
+    localStorage.clear();
+    window.location.href = '/';
 }
 
 function Topics() {

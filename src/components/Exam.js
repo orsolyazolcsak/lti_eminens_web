@@ -1,6 +1,14 @@
 import React from "react";
 import ExamItem from "../ExamItem";
 import LoginService from "../LoginService";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import TableContainer from "@material-ui/core/TableContainer";
+import Button from "@material-ui/core/Button";
 
 class Exam extends React.Component {
     constructor(props) {
@@ -36,8 +44,6 @@ class Exam extends React.Component {
                     });
                 }
             )
-
-
     }
 
     render() {
@@ -50,18 +56,28 @@ class Exam extends React.Component {
         } else {
             return (
                 <div className="exam-list">
-                    <h2>{this.state.exam.name}</h2>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Id</th>
-                                <th>Nev</th>
-                            </tr>
-                            {examItems}
-                        </tbody>
-                    </table>
-                    <a href={'start/' + this.state.exam.id} >Vizsga indítása</a>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Id</TableCell>
+                                    <TableCell>Név</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {examItems}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <br/>
+                    <Button variant="contained" color="secondary" href='/test'>
+                        Vissza
+                    </Button>
+                    <Button variant="contained" color="primary" href={'start/' + this.state.exam.id}  className="startExamButton">
+                        Vizsga indítása
+                    </Button>
                 </div>
+
             );
         }
     }
